@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do list app</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+        .container{
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(135deg, orange 60%, cyan);
+            padding:10px;
+        }
+
+        .todoapp{
+            width: 100%;
+            max-width: 540px;
+            background-color: antiquewhite;
+            margin: 100px auto 20px;
+            padding: 40px 30px 70px;
+            border-radius: 10px;
+        }
+        .todoapp h2{
+            color: rgb(42, 224, 42);
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .todoapp img{
+            width: 50px;
+            height: 50px;
+        }
+        .row{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #edeef0;
+            border-radius: 30px;
+            padding-left: 20px;
+            margin-bottom :25px ;
+        }
+
+        input{
+            flex:1;
+            border: none;
+            outline: none;
+            background: none;
+            padding: 10px;
+        }
+
+        button{
+            border: none;
+            outline: none;
+            padding:16px,50px ;
+            background: #a7639e;
+            color: rgb(245, 248, 238);
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        ul li{
+            list-style: none;
+            font-size: 17px;
+            padding: 12px 8px 12px 50px;
+            user-select: none;
+            cursor: pointer;
+            position: relative;
+        }
+
+        ul li::before{
+            content:'';
+            position: absolute;
+            height: 28px;
+            width: 28px;
+            border-radius: 50%;
+            background-image: url(https://imgs.search.brave.com/z65WmrO3oT8UBflJlaQHlkZTERW2QW75p6qhML1ZIik/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzEwLzE3LzgxLzQ4/LzM2MF9GXzEwMTc4/MTQ4MDhfZHE2Qkxo/QUlJOW9ta2FqcHlj/Zk95NkhqUE15anp1/c1EuanBn);
+            background-size: cover;
+            background-position:center;
+            top:12px;
+            left:8px;
+            position: absolute;
+        }
+
+        ul li.checked{
+            text-decoration: line-through;
+            color: #d65454;
+        }
+
+        ul li.checked::before{
+            background-image: url(https://imgs.search.brave.com/G7kBaul2AiMxGjfc6K5e4ONd3heA0P9UNtxmqlWOKA8/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9jZG4t/aWNvbnMtcG5nLmZs/YXRpY29uLmNvbS8x/MjgvNTI5MC81Mjkw/MDc2LnBuZw);
+
+            
+        }
+
+        ul li span{
+            position: absolute;
+            right: 0;
+            top: 5px;
+            width: 40px;
+            height: 40px;
+            font-size: 22px;
+            color: red;
+            line-height:40px; 
+            text-align: center;
+
+        }
+
+        ul li span:hover{
+            background-color: rgb(224, 233, 215);
+            ;
+        }
+    </style>
+</head>
+<body>
+   <div class="container">
+   <div class="todoapp">
+    <h2>To Do list <img src="https://imgs.search.brave.com/ncA2mAC6JC-6HkUAaArUVJzRcL78KoD4PMLy9BxtLSk/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/cGl4YWJheS5jb20v/cGhvdG8vMjAxOS8w/Mi8yOC8xNy8zMS90/YXNrcy00MDI2Mzk4/XzY0MC5qcGc" ></h2>
+    <div class="row">
+        <input type="text"id="input-box" placeholder="Enter your input text">
+        <button onclick="addTask()">Text Add</button>
+    </div>
+    <ul id="list-container">
+        <!--<li class="checked">Task1</li>
+        <li>Task2</li>
+        <li>Task3</li>-->
+    </ul>
+   </div>
+    </div> 
+
+    <script>
+        const inputBox=document.getElementById("input-box");
+        const listContainer=document.getElementById("list-container");
+        function addTask(){
+            if(inputBox.value ===''){
+               alert('Please enter some text');}
+               else{
+                let li=document.createElement("li");
+                li.innerHTML=inputBox.value;
+                listContainer.appendChild(li);
+                let span=document.createElement("span");
+                span.textContent='x';
+                li.appendChild(span);
+            }
+            inputBox.value="";
+            saveData();
+
+            }
+
+            listContainer.addEventListener("click",function(e){
+                if(e.target.tagName==="LI"){
+                    e.target.classList.toggle("checked");
+                    saveData();
+                }
+                else if(e.target.tagName==="SPAN"){
+                    e.target.parentElement.remove();
+                    saveData();
+                }
+            },false);
+
+            function saveData(){
+                localStorage.setItem("data",listContainer.innerHTML);
+            }
+
+            function showTask(){
+                listContainer.innerHTML =localStorage.getItem("data");
+            }
+            showTask();
+    </script> 
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
